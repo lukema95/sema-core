@@ -1,0 +1,66 @@
+name: Move contracts
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: contracts-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  aptos:
+    name: Aptos (AAS)
+    runs-on: ubuntu-22.04
+    env:
+      APTOS_CLI_VERSION: 7.14.1
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Aptos CLI
+        run: |
+          curl -fsSL -o aptos-cli.zip "https://github.com/aptos-labs/aptos-core/releases/download/aptos-cli-v${APTOS_CLI_VERSION}/aptos-cli-${APTOS_CLI_VERSION}-Ubuntu-22.04-x86_64.zip"
+          unzip -q aptos-cli.zip -d aptos-cli
+          sudo install -m 755 "$(find aptos-cli -name aptos -type f | head -1)" /usr/local/bin/aptos
+          aptos --version
+
+      - name: Cache Move dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.move
+          key: move-deps-${{ runner.os }}-${{ hashFiles('**/Move.lock') }}
+
+      - name: Test AAS
+        run: cd aas && aptos move test
+
+      - name: Test AAS resolver example
+        run: cd aas/resolver_example && aptos move test
+
+  sui:
+    name: Sui (SAS)
+    runs-on: ubuntu-22.04
+    env:
+      SUI_VERSION: 1.61.1
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Sui CLI
+        run: |
+          curl -fsSL -o sui.tgz "https://github.com/MystenLabs/sui/releases/download/testnet-v${SUI_VERSION}/sui-testnet-v${SUI_VERSION}-ubuntu-x86_64.tgz"
+          mkdir -p "$HOME/.local/bin"
+          tar -xzf sui.tgz -C "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          "$HOME/.local/bin/sui" --version
+
+      - name: Cache Move dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.move
+          key: move-deps-${{ runner.os }}-${{ hashFiles('**/Move.lock') }}
+
+      - name: Test SAS
+        run: cd sas && sui move test
+
+      - name: Test resolvers
+        run: cd sas/resolvers && sui move test

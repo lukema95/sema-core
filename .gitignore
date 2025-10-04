@@ -1,0 +1,20 @@
+# Move build output
+build/
+aas/build/
+aas/resolver_example/build/
+sas/build/
+sas/resolvers/build/
+
+# CLI profiles and keys — never commit these
+.aptos/
+.movement/
+.env
+.env.*
+*.key
+*.pem
+
+# OS
+.DS_Store
+
+# Node tooling (docs site, helper scripts)
+node_modules/

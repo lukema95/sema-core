@@ -1,0 +1,22 @@
+[package]
+name = "resolver_example"
+version = "1.0.0"
+authors = []
+
+[addresses]
+# `aas` is supplied by the local dependency; override it with --named-addresses when publishing.
+resolver_example = "_"
+
+[dev-addresses]
+aas = "0x101"
+resolver_example = "0x102"
+
+[dependencies]
+aas = { local = "../" }
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "e66a3efbd84c33dfb395bb3e1a8fea95274e0f4e"
+subdir = "aptos-move/framework/aptos-framework"
+
+[dev-dependencies]

@@ -1,0 +1,50 @@
+name: Bug report
+description: Report a defect in the contracts or tooling
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not use this form for security vulnerabilities. See SECURITY.md and report privately.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      options:
+        - sas (Sui)
+        - sas/resolvers
+        - aas (Aptos)
+        - aas/resolver_example
+        - docs / tooling
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Include commands, network, package address, and transaction digests if applicable.
+      placeholder: |
+        1. cd sas && sui move test
+        2. ...
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Toolchain versions
+      placeholder: sui 1.61.1 / aptos 7.14.1 / OS
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      render: shell

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security report
+    url: https://github.com/lukema95/sema-core/security/policy
+    about: Report vulnerabilities privately; do not open a public issue.
+  - name: Questions and discussions
+    url: https://github.com/lukema95/sema-core/discussions
+    about: Ask usage questions or discuss ideas.

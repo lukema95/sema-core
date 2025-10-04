@@ -1,0 +1,40 @@
+name: Feature request
+description: Propose a protocol or tooling improvement
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - sas (Sui)
+        - aas (Aptos)
+        - resolvers
+        - documentation
+        - tooling / CI
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What limitation or use case are you addressing?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: Describe the change, including interface and storage implications.
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility impact
+      description: Does this require a new package version, migration, or address change?
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
